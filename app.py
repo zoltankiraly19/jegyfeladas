@@ -40,10 +40,10 @@ DROPDOWN_OPTIONS = {
 def create_ticket():
     """Jegy létrehozása felhasználói kiválasztás alapján."""
     data = request.json
-    user_name = data.get('Felhasználónév')
-    selected_option = data.get('Kiválasztott csoport')
-    selected_priority = data.get('Kiválasztott prioritás')
-    short_description = data.get('Hiba rövid leírása')
+    user_name = data.get('felhasználónév')
+    selected_option = data.get('csoport')
+    selected_priority = data.get('prioritás')
+    short_description = data.get('leírás')
 
     # Betöltjük a felhasználó tokenjét és sys_id-jét a COS-ból
     user_token = load_data_from_cos(bucket_name, f"{user_name}_user_token")
