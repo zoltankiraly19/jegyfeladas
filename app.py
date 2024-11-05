@@ -31,10 +31,15 @@ def load_data_from_cos(bucket_name, file_key):
 
 # Betöltjük a globális assignment groupokat és prioritásokat
 assignment_groups_data = load_data_from_cos(bucket_name, 'global_assignment_groups')
-DROPDOWN_OPTIONS = {
-    "labels": [group["name"] for group in json.loads(assignment_groups_data)],
-    "values": {group["name"]: group["sys_id"] for group in json.loads(assignment_groups_data)}
-}
+if assignment_groups_data:
+    assignment_groups = json.loads(assignment_groups_data)
+    DROPDOWN_OPTIONS = {
+        "labels": [group["name"] for group in assignment_groups],
+        "values": {group["name"]: group["sys_id"] for group in assignment_groups}
+    }
+else:
+    print("Hiba: nem sikerült betölteni az assignment groupokat a COS-ból.")
+    DROPDOWN_OPTIONS = {"labels": [], "values": {}}
 
 @app.route('/create_ticket', methods=['POST'])
 def create_ticket():
@@ -51,8 +56,7 @@ def create_ticket():
 
     if not user_token or not user_sys_id:
         return jsonify({
-            "success": False,
-            "message": "A megadott felhasználónévhez nem található a token vagy sys_id."
+            "ServiceNow": "A megadott felhasználónévhez nem található a token vagy sys_id."
         }), 400
 
     # Ellenőrizzük, hogy az assignment group kiválasztása érvényes-e
@@ -60,8 +64,7 @@ def create_ticket():
     
     if not assignment_group_id:
         return jsonify({
-            "success": False,
-            "message": "Érvénytelen csoport kiválasztás."
+            "ServiceNow": "Érvénytelen csoport kiválasztás."
         }), 400
 
     # Jegy adatok ServiceNow-ba történő küldéshez
@@ -84,15 +87,14 @@ def create_ticket():
     )
 
     if response.status_code == 201:
+        result = response.json().get('result', {})
+        ticket_number = result.get('number', 'N/A')
         return jsonify({
-            "success": True,
-            "message": f"Sikeresen létrehozta a hibajegyet a következő azonosítóval: {response.json().get('result', {}).get('number')}",
-            "ticket_number": response.json().get('result', {}).get('number')
+            "ServiceNow": f"Sikeresen létrehozta a hibajegyet a következő azonosítóval: {ticket_number}"
         }), 201
     else:
         return jsonify({
-            "success": False,
-            "message": "A hibajegy létrehozása sikertelen.",
+            "ServiceNow": "A hibajegy létrehozása sikertelen.",
             "details": response.text
         }), response.status_code
 
