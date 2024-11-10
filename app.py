@@ -11,10 +11,10 @@ CORS(app)
 # IBM COS konfiguráció
 cos = ibm_boto3.client(
     's3',
-    ibm_api_key_id='a2g6_5isBRzu-zm2vGL4ITcXhyL__rUe_RNWjGYVrkWr',
-    ibm_service_instance_id='e669d0c8-4f96-478e-86bf-fd49039ff1f8',
+    ibm_api_key_id='i4LdD__uysZhfV-WPzWvzH8kKr_gq7K7KX55DPVkZHes',
+    ibm_service_instance_id='4dd2087c-b236-4cb9-9089-faa38562f64b',
     config=Config(signature_version='oauth'),
-    endpoint_url='https://s3.us-south.cloud-object-storage.appdomain.cloud'
+    endpoint_url='https://s3.direct.us-south.cloud-object-storage.appdomain.cloud'
 )
 
 bucket_name = 'servicenow'
