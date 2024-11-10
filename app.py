@@ -17,7 +17,7 @@ cos = ibm_boto3.client(
     endpoint_url='https://s3.direct.us-south.cloud-object-storage.appdomain.cloud'
 )
 
-bucket_name = 'servicenow'
+bucket_name = 'servicenow2'
 
 def load_data_from_cos(bucket_name, file_key):
     """Betölti az adatokat a COS-ból a megadott fájlnév alapján."""
