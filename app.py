@@ -11,7 +11,7 @@ CORS(app)
 # IBM COS konfiguráció
 cos = ibm_boto3.client(
     's3',
-    ibm_api_key_id=''5o6X835azJMALPLiebgIUUqRQ8e-NEM_PkQJ4thH9aI7',
+    ibm_api_key_id='5o6X835azJMALPLiebgIUUqRQ8e-NEM_PkQJ4thH9aI7',
     ibm_service_instance_id='f39973c6-786a-459c-9564-40f6d8e6a6b7'',
     config=Config(signature_version='oauth'),
     endpoint_url='https://s3.us-south.cloud-object-storage.appdomain.cloud'
