@@ -81,7 +81,7 @@ def create_ticket():
         'Content-Type': 'application/json'
     }
     response = requests.post(
-        'https://dev227667.service-now.com/api/now/table/incident',
+        'https://dev182538.service-now.com/api/now/table/incident',
         headers=headers,
         json=ticket_data
     )
